@@ -1,5 +1,5 @@
 # LSystemGenerator
-LSystem generator using JavaFX.
+LSystem generator using JavaFX. Can import export resulted trees/systems as .obj into blender.
 
 
 
@@ -12,7 +12,7 @@ LSystem generator using JavaFX.
 - [X] Generate and Parse LSystem String
 - [X] Construct 3d Mesh from triangles (WIP)
 - [ ] Save/Load LSystem from file
-- [ ] Export as OBJ
+- [X] Export as OBJ
 
 
 
