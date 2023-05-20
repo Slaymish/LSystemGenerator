@@ -12,8 +12,20 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ListCell?>
 <?import javafx.util.Callback?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuItem?>
 
 <BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.lsystemgenerator.LSystemController">
+    <top>
+        <MenuBar>
+            <Menu text="File">
+                <MenuItem text="Load" onAction="#onLoadButtonClick"/>
+                <MenuItem text="Save As" onAction="#onSaveButtonClick"/>
+                <MenuItem text="Export as OBJ" onAction="#onExportButtonClick"/>
+            </Menu>
+        </MenuBar>
+    </top>
     <left>
         <VBox alignment="CENTER" spacing="20.0" maxWidth="400">
             <padding>
@@ -22,7 +34,7 @@
             <Label text="Axiom"/>
             <TextField fx:id="axiomInput"/>
             <Label text="Rules"/>
-            <ListView fx:id="rulesListView" prefHeight="150" />
+            <ListView fx:id="rulesListView" prefHeight="150"/>
             <Button text="Add Rule" onAction="#onAddRuleButtonClick"/>
             <Button text="Remove Rule" onAction="#onRemoveRuleButtonClick"/>
             <Label text="Iterations"/>
@@ -30,8 +42,6 @@
             <Label text="Angle"/>
             <TextField fx:id="angleInput" />
             <Button text="Generate" onAction="#onGenerateButtonClick"/>
-            <Button text="Save" onAction="#onSaveButtonClick"/>
-            <Button text="Export to OBJ" onAction="#onExportButtonClick"/>
             <Button text="Load" onAction="#onLoadButtonClick"/>
             <Button text="Quit" onAction="#onQuitButtonClick"/>
         </VBox>

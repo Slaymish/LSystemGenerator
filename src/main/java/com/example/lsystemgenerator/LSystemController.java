@@ -1,6 +1,9 @@
 package com.example.lsystemgenerator;
 
+import com.almasb.fxgl.io.FileSystemService;
+import com.example.lsystemgenerator.util.Edge;
 import com.example.lsystemgenerator.util.LSystem;
+import com.example.lsystemgenerator.util.ObjExporter;
 import com.example.lsystemgenerator.util.Turtle;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -21,12 +24,12 @@ import javafx.scene.shape.Cylinder;
 import javafx.scene.shape.MeshView;
 import javafx.scene.shape.TriangleMesh;
 import javafx.scene.transform.Rotate;
+import javafx.stage.FileChooser;
 import javafx.util.Pair;
+
+import java.io.File;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class LSystemController implements Initializable {
@@ -42,6 +45,11 @@ public class LSystemController implements Initializable {
     private TextField angleInput;
 
     private LSystem currentLSystem;
+
+
+    private Map<Integer, Point3D> vertices = new HashMap<>();
+    private Map<Edge, Integer[]> edges = new HashMap<>();
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -106,8 +114,9 @@ public class LSystemController implements Initializable {
         MeshView meshView = new MeshView(mesh);
         meshView.setMaterial(new PhongMaterial(Color.GREEN));
 
-        List<Point3D> points = new ArrayList<>();
-
+        Map<Integer, Point3D> points = new HashMap<>();
+        Map<Edge, Integer[]> edges = new HashMap<>();
+        int count = 1;
 
         // Interpret the generated string as turtle commands
         for (char c : generatedString.toCharArray()) {
@@ -117,9 +126,15 @@ public class LSystemController implements Initializable {
                 turtle.forward(1);
                 Point3D newPosition = turtle.getPosition();
 
-                // Add the points to the list
-                points.add(oldPosition);
-                points.add(newPosition);
+                points.put(count, oldPosition);
+                count++;
+                // Add the point to the mesh
+                points.put(count, newPosition);
+                count++;
+
+                // Add the edge to the mesh
+                edges.put(new Edge(oldPosition, newPosition), new Integer[]{count - 2, count - 1});
+
             } else if (c == '+') {
                 // Turn the turtle
                 turtle.turn(angle);
@@ -147,18 +162,34 @@ public class LSystemController implements Initializable {
             }
         }
 
-        // Add the points to the TriangleMesh
-        for (Point3D point : points) {
-            mesh.getPoints().addAll((float) point.getX(), (float) point.getY(), (float) point.getZ());
-        }
+        this.vertices = points;
+        this.edges = edges;
 
-        // Connect the points with triangles
-        for (int i = 0; i < points.size() - 2; i++) {
-            mesh.getFaces().addAll(i, 0, i + 2, 0, i + 1, 0);
-        }
+        // an a cylinder for each edge
+        for (Edge edge : edges.keySet()) {
+            Point3D start = edge.start();
+            Point3D end = edge.end();
 
-        // Add the MeshView to the group
-        group.getChildren().add(meshView);
+            // Create a cylinder
+            Cylinder cylinder = new Cylinder(0.1, start.distance(end));
+            cylinder.setMaterial(new PhongMaterial(Color.RED));
+
+            // Translate the cylinder
+            cylinder.setTranslateX(start.getX());
+            cylinder.setTranslateY(start.getY());
+            cylinder.setTranslateZ(start.getZ());
+
+            // Rotate the cylinder
+            Point3D yAxis = new Point3D(0, 1, 0);
+            Point3D diff = end.subtract(start);
+            double angleBetween = diff.angle(yAxis);
+            Point3D axisOfRotation = diff.crossProduct(yAxis);
+            cylinder.setRotationAxis(axisOfRotation);
+            cylinder.setRotate(-Math.toDegrees(angleBetween));
+
+            // Add the cylinder to the group
+            group.getChildren().add(cylinder);
+        }
 
         // Create a camera
         PerspectiveCamera camera = new PerspectiveCamera(true);
@@ -215,6 +246,27 @@ public class LSystemController implements Initializable {
         });
     }
 
+    private void saveAsObj() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save as OBJ");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("OBJ", "*.obj"));
+        File file = fileChooser.showSaveDialog(LSystemApplication.stage);
+
+        if (file == null) {
+            return;
+        }
+
+        // Create ObjExport
+        ObjExporter objExporter = new ObjExporter(file.getAbsolutePath());
+        objExporter.addVertices(this.vertices);
+        objExporter.addEdges(this.edges, this.vertices);
+        try {
+            objExporter.writeToFile();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public void onSaveButtonClick(ActionEvent actionEvent) {
         System.out.println("Save button clicked (WIP)");
 
@@ -242,6 +294,7 @@ public class LSystemController implements Initializable {
     }
 
     public void onExportButtonClick(ActionEvent actionEvent) {
-        // TODO: Export the LSystem as an OBJ file
+        saveAsObj();
+        System.out.println("Exported");
     }
 }
