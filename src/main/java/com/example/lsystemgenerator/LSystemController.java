@@ -154,7 +154,7 @@ public class LSystemController implements Initializable {
 
         // Connect the points with triangles
         for (int i = 0; i < points.size() - 2; i++) {
-            mesh.getFaces().addAll(i, 0, i + 1, 0, i + 2, 0);
+            mesh.getFaces().addAll(i, 0, i + 2, 0, i + 1, 0);
         }
 
         // Add the MeshView to the group
