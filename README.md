@@ -23,4 +23,4 @@ LSystem generator using JavaFX.
 #### 📝 License
 
 Copyright © 2023 [Hamish Burke](https://github.com/Slaymish). <br />
-This project is [MIT](https://github.com/Slaymish/SpeechToSpeechAssistant/blob/main/LICENSE) licensed. 
+This project is [MIT](https://github.com/Slaymish/LSystemGenerator/blob/main/LICENSE) licensed. 
