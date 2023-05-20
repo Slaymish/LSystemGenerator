@@ -7,7 +7,7 @@ LSystem generator using JavaFX. Can import export resulted trees/systems as .obj
 
 <img width="500" alt="LSystem contructed using above string" src="https://github.com/Slaymish/LSystemGenerator/assets/21288505/b64e5cae-96dc-4f1d-8349-a6f91cb40059">
 
-![BlenderRender](https://github.com/Slaymish/LSystemGenerator/assets/21288505/e3bf0f78-daff-4851-9b88-57dd885f757e)
+<img width="200" alt="LSystem rendered in blender" src="https://github.com/Slaymish/LSystemGenerator/assets/21288505/e3bf0f78-daff-4851-9b88-57dd885f757e">
 
 
 ## TODO
