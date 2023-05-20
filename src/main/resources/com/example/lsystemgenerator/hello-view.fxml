@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ListCell?>
+<?import javafx.util.Callback?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.lsystemgenerator.LSystemController">
+    <left>
+        <VBox alignment="CENTER" spacing="20.0" maxWidth="400">
+            <padding>
+                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+            </padding>
+            <Label text="Axiom"/>
+            <TextField fx:id="axiomInput"/>
+            <Label text="Rules"/>
+            <ListView fx:id="rulesListView" prefHeight="150" />
+            <Button text="Add Rule" onAction="#onAddRuleButtonClick"/>
+            <Button text="Remove Rule" onAction="#onRemoveRuleButtonClick"/>
+            <Label text="Iterations"/>
+            <TextField fx:id="iterationsInput"/>
+            <Label text="Angle"/>
+            <TextField fx:id="angleInput" />
+            <Button text="Generate" onAction="#onGenerateButtonClick"/>
+            <Button text="Save" onAction="#onSaveButtonClick"/>
+            <Button text="Export to OBJ" onAction="#onExportButtonClick"/>
+            <Button text="Load" onAction="#onLoadButtonClick"/>
+            <Button text="Quit" onAction="#onQuitButtonClick"/>
+        </VBox>
+    </left>
+    <center>
+        <SplitPane dividerPositions="0.3">
+            <VBox fx:id="lsystemViewportPane"/>
+        </SplitPane>
+    </center>
+</BorderPane>
