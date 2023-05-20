@@ -5,6 +5,8 @@ LSystem generator using JavaFX
 
 ## TODO
 
+- [X] Generate and Parse LSystem String
+- [X] Construct 3d Mesh from triangles (WIP)
 - [ ] Save/Load LSystem from file
 - [ ] Export as OBJ
 
