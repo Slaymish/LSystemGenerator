@@ -12,7 +12,7 @@ public class LSystemApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(LSystemApplication.class.getResource("hello-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 650, 470);
+        Scene scene = new Scene(fxmlLoader.load(), 850, 570);
         stage.setTitle("L-System Generator");
         stage.setScene(scene);
         stage.show();

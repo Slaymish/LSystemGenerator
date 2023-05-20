@@ -27,8 +27,9 @@ import javafx.scene.transform.Rotate;
 import javafx.stage.FileChooser;
 import javafx.util.Pair;
 
-import java.io.File;
+import java.io.*;
 import java.net.URL;
+import java.nio.file.Files;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -270,13 +271,73 @@ public class LSystemController implements Initializable {
     public void onSaveButtonClick(ActionEvent actionEvent) {
         System.out.println("Save button clicked (WIP)");
 
-        // TODO: Save the LSystem to a file
+        String toSave = this.currentLSystem.output();
+
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save L-System");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("L-System", "*.lsystem"));
+        File file = fileChooser.showSaveDialog(LSystemApplication.stage);
+
+        if (file == null) {
+            return;
+        }
+
+        try {
+            FileWriter fileWriter = new FileWriter(file);
+            fileWriter.write(toSave);
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void onLoadButtonClick(ActionEvent actionEvent) {
         System.out.println("Load button clicked (WIP)");
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Load L-System");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("L-System", "*.lsystem"));
+        File file = fileChooser.showOpenDialog(LSystemApplication.stage);
 
-        // TODO: Load an LSystem from a file
+        if (file == null) {
+            return;
+        }
+
+        // open the file
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+
+            // read the axiom
+            String axiom = reader.readLine();
+            this.axiomInput.setText(axiom);
+
+            // read the angle
+            String angle = reader.readLine();
+            this.angleInput.setText(angle);
+
+            // read the iterations
+            String iterations = reader.readLine();
+            this.iterationsInput.setText(iterations);
+
+
+            // read the rules
+            String line;
+            rulesListView.getItems().clear();
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split("->");
+                String left = parts[0];
+                String right = parts[1];
+
+                // add the rule to the list
+                rulesListView.getItems().add(new Pair<>(new TextField(left), new TextField(right)));
+            }
+
+
+            // close the file
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public void onQuitButtonClick(ActionEvent actionEvent) {

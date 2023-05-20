@@ -39,4 +39,22 @@ public record LSystem(String axiom, Map<String,String> rules, int iterations, do
     public String toString() {
         return String.format("LSystem(axiom=%s, rules=%s, iterations=%d, angle=%f)", axiom, rules, iterations, angle);
     }
+
+    public String output() {
+        // axiom angle interations rules
+        StringBuilder sb = new StringBuilder();
+        sb.append(axiom);
+        sb.append("\n");
+        sb.append(angle);
+        sb.append("\n");
+        sb.append(iterations);
+        sb.append("\n");
+        for (String key : rules.keySet()) {
+            sb.append(key);
+            sb.append("->");
+            sb.append(rules.get(key));
+            sb.append("\n");
+        }
+        return sb.toString();
+    }
 }

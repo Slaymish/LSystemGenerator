@@ -20,9 +20,10 @@
     <top>
         <MenuBar>
             <Menu text="File">
-                <MenuItem text="Load" onAction="#onLoadButtonClick"/>
-                <MenuItem text="Save As" onAction="#onSaveButtonClick"/>
+                <MenuItem text="Open" onAction="#onLoadButtonClick"/>
+                <MenuItem text="Save" onAction="#onSaveButtonClick"/>
                 <MenuItem text="Export as OBJ" onAction="#onExportButtonClick"/>
+                <MenuItem text="Quit" onAction="#onQuitButtonClick"/>
             </Menu>
         </MenuBar>
     </top>
@@ -42,8 +43,6 @@
             <Label text="Angle"/>
             <TextField fx:id="angleInput" />
             <Button text="Generate" onAction="#onGenerateButtonClick"/>
-            <Button text="Load" onAction="#onLoadButtonClick"/>
-            <Button text="Quit" onAction="#onQuitButtonClick"/>
         </VBox>
     </left>
     <center>
