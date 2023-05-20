@@ -13,9 +13,10 @@ LSystem generator using JavaFX. Can import export resulted trees/systems as .obj
 ## TODO
 
 - [X] Generate and Parse LSystem String
-- [X] Construct 3d Mesh from triangles (WIP)
-- [ ] Save/Load LSystem from file
+- [X] Save/Load LSystem from file
 - [X] Export as OBJ
+- [ ] Construct 3d Mesh from triangles (WIP)
+
 
 
 
